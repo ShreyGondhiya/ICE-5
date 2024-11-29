@@ -5,6 +5,7 @@
  */
 package pizzashop;
 
+import java.util.HashMap;
 /**
  * A class that creates different kinds of pizzas
  * depending on their type.
@@ -13,24 +14,27 @@ package pizzashop;
  * Freeman, E.Freeman, E., Sierra, K., & Bates, B. (2004). Head First Design patterns. Sebastopol, CA: O'Reilly.
  * @author dancye
  */
-class PizzaFactory 
-{
-    /**
-     * returns a concrete pizza object
-     * @param type the type of pizza to return
-     * @return 
-     */
-    public Pizza createPizza(String type)
-    {
-        Pizza pizza = null;
-        if(type.equals("cheese"))
-        {
-            pizza = new CheesePizza();
+public class PizzaFactory {
+    private HashMap<String, Class<? extends Pizza>> registry = new HashMap<>();
+
+    public PizzaFactory() {
+        registerPizza("cheese", CheesePizza.class);
+        registerPizza("pepperoni", PepperoniPizza.class);
+    }
+
+    public void registerPizza(String type, Class<? extends Pizza> pizzaClass) {
+        registry.put(type, pizzaClass);
+    }
+
+    public Pizza createPizza(String type) {
+        Class<? extends Pizza> pizzaClass = registry.get(type);
+        if (pizzaClass != null) {
+            try {
+                return pizzaClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        else if (type.equals("pepperoni"))
-        {
-                pizza = new PepperoniPizza();
-        }
-        return pizza;
+        return null;
     }
 }

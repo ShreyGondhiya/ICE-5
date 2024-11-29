@@ -11,23 +11,24 @@ import java.util.ArrayList;
  * A class that represents a basic pizza
  * @author dancye
  */
-public class Pizza 
-{
-    public int bakeTemp = 100;//temp to bake at
-    private ArrayList<String> ingredients = new ArrayList();
-    public void bake(int temp)
-    {
-        bakeTemp = temp;
-        //do some baking here, code not implemented yet
-        //not necessary for the review
+public class Pizza {
+    public int bakeTemp = 100; // temp to bake at
+    private ArrayList<String> ingredients = new ArrayList<>();
+
+    public Pizza() {
+        addBaseToppings(); // Add default toppings (like "cheese") automatically
     }
-    /**
-     *  A method to add toppings to the ingredients
-     * list
-     * @param topping 
-     */
-    public void addTopping(String topping)
-    {
+
+    protected void addBaseToppings() {
+        addTopping("cheese"); // All pizzas start with cheese
+    }
+
+    public void addTopping(String topping) {
         ingredients.add(topping);
+    }
+
+    public void bake(int temp) {
+        bakeTemp = temp;
+        // Baking logic (not implemented)
     }
 }
